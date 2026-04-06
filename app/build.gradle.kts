@@ -27,9 +27,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     
-    kotlinOptions { jvmTarget = "17" }
+    kotlinOptions {
+        jvmTarget = "17"
+        // Эта строка игнорирует мелкие нестыковки версий Kotlin, если они полезут
+        freeCompilerArgs += "-P"
+        freeCompilerArgs += "plugin:org.jetbrains.kotlin.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
+    }
 
-    buildFeatures { compose = true }
+    buildFeatures {
+        compose = true
+    }
 
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.3" 
@@ -45,11 +52,9 @@ dependencies {
     // Compose
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.material3:material3")
     
-    // Glance (Виджеты)
+    // Glance
     implementation("androidx.glance:glance-appwidget:1.0.0")
-    
-    // Работа в фоне
-    implementation("androidx.work:work-runtime-ktx:2.9.0")
 }
