@@ -6,7 +6,9 @@
 
     <application
         android:label="Liquid Widgets"
+        android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.Material3.Dark">
+        
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
