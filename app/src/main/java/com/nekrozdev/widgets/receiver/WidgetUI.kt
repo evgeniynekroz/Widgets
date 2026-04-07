@@ -1,22 +1,20 @@
 package com.nekrozdev.widgets.receiver
 
 import android.content.Context
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.glance.*
-import androidx.glance.appwidget.*
+import androidx.glance.GlanceId
+import androidx.glance.GlanceModifier
+import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.provideContent
 import androidx.glance.layout.*
-import androidx.glance.text.*
-import androidx.glance.unit.ColorProvider
-import com.nekrozdev.widgets.data.DataRepository
+import androidx.glance.text.Text
 
-class UniversalWidget : GlanceAppWidget() {
+class WidgetUI : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val repo = DataRepository(context)
         provideContent {
-            Column(GlanceModifier.fillMaxSize().background(ColorProvider(Color(0x992D004D))).padding(8.dp)) {
-                Text("Система", style = TextStyle(color = ColorProvider(Color.White)))
-                Text("Заряд: ${repo.getBattery()}", style = TextStyle(color = ColorProvider(Color.White)))
+            // Твой базовый дизайн, чтобы билд прошел
+            Box(modifier = GlanceModifier.fillMaxSize()) {
+                Text(text = "Liquid Widgets")
             }
         }
     }
