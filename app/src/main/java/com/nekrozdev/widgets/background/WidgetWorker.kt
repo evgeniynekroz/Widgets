@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.ListenableWorker.Result
-// Меняем импорт с ресивера на UI класс
 import com.nekrozdev.widgets.receiver.WidgetUI
 
 class WidgetWorker(
@@ -14,9 +13,8 @@ class WidgetWorker(
 
     override suspend fun doWork(): Result {
         return try {
-            // Вызываем updateAll у класса самого виджета (GlanceAppWidget)
+            // Теперь вызываем обновление напрямую у класса виджета
             WidgetUI().updateAll(applicationContext)
-            
             Result.success()
         } catch (e: Exception) {
             Result.retry()
