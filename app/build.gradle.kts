@@ -29,18 +29,11 @@ android {
     
     kotlinOptions {
         jvmTarget = "17"
-        // Эта строка игнорирует мелкие нестыковки версий Kotlin, если они полезут
-        freeCompilerArgs += "-P"
-        freeCompilerArgs += "plugin:org.jetbrains.kotlin.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
+        freeCompilerArgs += listOf("-P", "plugin:org.jetbrains.kotlin.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true")
     }
 
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3" 
-    }
+    buildFeatures { compose = true }
+    composeOptions { kotlinCompilerExtensionVersion = "1.5.3" }
 }
 
 dependencies {
@@ -52,9 +45,11 @@ dependencies {
     // Compose
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.material3:material3")
     
-    // Glance
+    // Glance (Виджеты)
     implementation("androidx.glance:glance-appwidget:1.0.0")
+
+    // ВОТ ЭТО ИСПРАВИТ ОШИБКУ:
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
 }
