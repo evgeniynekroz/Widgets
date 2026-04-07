@@ -1,13 +1,27 @@
 package com.nekrozdev.widgets.background
 
 import android.content.Context
-import androidx.glance.appwidget.updateAll
-import androidx.work.*
-import com.nekrozdev.widgets.receiver.UniversalWidget
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
+import androidx.work.ListenableWorker.Result
+import com.nekrozdev.widgets.receiver.WidgetReceiver
 
-class WidgetWorker(val context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
+class WidgetWorker(
+    context: Context,
+    workerParams: WorkerParameters
+) : CoroutineWorker(context, workerParams) {
+
+    // Метод, который выполняется в фоне
     override suspend fun doWork(): Result {
-        UniversalWidget().updateAll(context)
-        return Result.success()
+        return try {
+            // Вызываем обновление всех виджетов через ресивер
+            WidgetReceiver().updateAll(applicationContext)
+            
+            // Возвращаем успех для WorkManager
+            Result.success()
+        } catch (e: Exception) {
+            // Если что-то пошло не так, пробуем позже
+            Result.retry()
+        }
     }
 }
