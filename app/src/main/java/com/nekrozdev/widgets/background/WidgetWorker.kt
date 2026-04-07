@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.ListenableWorker.Result
+// ВАЖНО: Добавлен импорт функции-расширения
+import androidx.glance.appwidget.updateAll 
 import com.nekrozdev.widgets.receiver.WidgetUI
 
 class WidgetWorker(
@@ -13,7 +15,7 @@ class WidgetWorker(
 
     override suspend fun doWork(): Result {
         return try {
-            // Теперь вызываем обновление напрямую у класса виджета
+            // Теперь компилятор увидит этот метод благодаря импорту выше
             WidgetUI().updateAll(applicationContext)
             Result.success()
         } catch (e: Exception) {
