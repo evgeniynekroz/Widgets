@@ -4,23 +4,21 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.ListenableWorker.Result
-import com.nekrozdev.widgets.receiver.WidgetReceiver
+// Меняем импорт с ресивера на UI класс
+import com.nekrozdev.widgets.receiver.WidgetUI
 
 class WidgetWorker(
     context: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
 
-    // Метод, который выполняется в фоне
     override suspend fun doWork(): Result {
         return try {
-            // Вызываем обновление всех виджетов через ресивер
-            WidgetReceiver().updateAll(applicationContext)
+            // Вызываем updateAll у класса самого виджета (GlanceAppWidget)
+            WidgetUI().updateAll(applicationContext)
             
-            // Возвращаем успех для WorkManager
             Result.success()
         } catch (e: Exception) {
-            // Если что-то пошло не так, пробуем позже
             Result.retry()
         }
     }
